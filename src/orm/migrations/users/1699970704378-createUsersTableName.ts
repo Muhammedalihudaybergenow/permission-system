@@ -6,7 +6,6 @@ import {
 } from 'src/orm/constants/columns';
 import { idIndex } from 'src/orm/constants/indexes';
 const tableName = 'users';
-const languageTableName = 'languages';
 
 export class CreateUsersTableName1699970704378 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -33,7 +32,7 @@ export class CreateUsersTableName1699970704378 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'lang_id',
+            name: 'lang',
             type: 'integer',
             isNullable: false,
           },
@@ -42,7 +41,7 @@ export class CreateUsersTableName1699970704378 implements MigrationInterface {
         ],
         indices: [
           {
-            columnNames: ['lang_id'],
+            columnNames: ['lang'],
           },
           idIndex,
           {

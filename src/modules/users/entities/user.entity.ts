@@ -1,12 +1,6 @@
 import { DateEntity } from 'src/helpers/entities';
-import { LanguageEntity } from 'src/modules/languages/entities';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { LanguageEnum } from 'src/helpers/enums';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'users',
@@ -33,18 +27,11 @@ export class UserEntity extends DateEntity {
   password: string;
 
   @Column({
-    name: 'lang_id',
+    name: 'lang',
     type: 'integer',
     nullable: false,
   })
-  langId: number;
-
-  @ManyToOne(() => LanguageEntity, (language) => language.id)
-  @JoinColumn({
-    name: 'lang_id',
-    referencedColumnName: 'id',
-  })
-  language: LanguageEntity;
+  lang: LanguageEnum;
 
   constructor(entity: Partial<UserEntity>) {
     super();

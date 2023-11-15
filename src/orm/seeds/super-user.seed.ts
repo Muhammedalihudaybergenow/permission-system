@@ -1,18 +1,14 @@
 import { DataSource } from 'typeorm';
 import { Seeder } from 'typeorm-extension';
-import { LanguageEntity } from 'src/modules/languages/entities';
 import { UserEntity } from 'src/modules/users/entities';
 import { HashHelper } from 'src/helpers/hash';
+import { LanguageEnum } from 'src/helpers/enums';
 const superUserSeed: Partial<UserEntity> = {
   phonenumber: 62123456,
   password: 'Hello123',
 };
 export class SuperUserSeed implements Seeder {
   async run(dataSource: DataSource) {
-    const languageRepository = dataSource.getRepository(LanguageEntity);
-    const defaultLanguage = await languageRepository.findOneBy({
-      isDefault: true,
-    });
     const userRepository = dataSource.getRepository(UserEntity);
     const checkUser = await userRepository
       .createQueryBuilder('users')
@@ -24,6 +20,7 @@ export class SuperUserSeed implements Seeder {
       const superUserEntity = new UserEntity({
         phonenumber: superUserSeed.phonenumber,
         password: await HashHelper.getHash(superUserSeed.password),
+        lang: LanguageEnum.ALL,
       });
       await userRepository.save(superUserEntity);
     }
