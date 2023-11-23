@@ -9,10 +9,10 @@ export class RolesSeed implements Seeder {
   async run(dataSource: DataSource) {
     const roleRepository = dataSource.getRepository(RoleEntity);
     const roleEntity = new RoleEntity(manager);
-    const checkRole = roleRepository.findOneBy({
+    const checkRole = await roleRepository.findOneBy({
       slug: manager.slug,
     });
-    if (!manager) {
+    if (!checkRole) {
       await roleRepository.save(roleEntity);
     }
   }

@@ -1,7 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
 import { SeederOptions } from 'typeorm-extension';
-
+import { PermissionSeed, RolesSeed, SuperUserSeed } from 'src/orm/seeds';
 dotenv.config();
 const dataSourceOptions: DataSourceOptions & SeederOptions = {
   type: 'postgres',
@@ -12,18 +12,10 @@ const dataSourceOptions: DataSourceOptions & SeederOptions = {
   port: parseInt(process.env.TYPEORM_DATABASE_PORT),
   migrations: ['dist/**/migrations/**/*.{js,ts}'],
   entities: ['dist/modules/**/*.entity.{js,ts}'],
-  seeds: [],
+  seeds: [RolesSeed, SuperUserSeed, PermissionSeed],
+  logger: 'simple-console',
   synchronize:
     process.env.TYPEORM_DATABASE_SYNCHRONIZE == 'true' ? true : false,
-  cache: {
-    type: 'redis',
-    duration: parseInt(process.env.TYPEORM_DATABASE_CACHE_DURATION),
-    alwaysEnabled: true,
-    options: {
-      port: process.env.REDIS_PORT,
-      host: process.env.REDIS_HOST,
-    },
-  },
 };
 
 export default new DataSource(dataSourceOptions);

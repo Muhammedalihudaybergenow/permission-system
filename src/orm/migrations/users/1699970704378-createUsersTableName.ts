@@ -36,6 +36,11 @@ export class CreateUsersTableName1699970704378 implements MigrationInterface {
             type: 'integer',
             isNullable: false,
           },
+          {
+            name: 'status',
+            type: 'integer',
+            isNullable: false
+          },
           createdAtColumn,
           updatedAtColumn,
         ],
