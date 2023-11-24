@@ -5,9 +5,13 @@ import {
 } from 'src/modules/authentications/services';
 import { AuthenticationsController } from 'src/modules/authentications/controllers';
 import { UsersModule } from 'src/modules/users/users.module';
-import { UsersService } from 'src/modules/users/services';
+import { ManagerUserRepository } from 'src/modules/users/repositories';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import {
+  BasicStrategy,
+  JwtStrategy,
+} from 'src/modules/authentications/strategies';
 
 @Module({
   imports: [
@@ -26,6 +30,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AuthenticationsController],
-  providers: [AuthenticationsService, UsersService, TokenService],
+  providers: [
+    AuthenticationsService,
+    BasicStrategy,
+    JwtStrategy,
+    ManagerUserRepository,
+    TokenService,
+  ],
 })
 export class AuthenticationsModule {}

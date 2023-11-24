@@ -1,1 +1,1 @@
-export { UsersController } from './users.controller';
+export { ManagerUsersController } from './manager-users.controller';

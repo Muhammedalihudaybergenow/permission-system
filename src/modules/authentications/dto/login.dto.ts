@@ -13,6 +13,7 @@ export class LoginDto {
     type: Number,
     required: true,
     nullable: false,
+    example: 62123456,
   })
   @IsNumber()
   @Min(61000000, {
@@ -36,6 +37,7 @@ export class LoginDto {
     type: String,
     required: true,
     nullable: false,
+    example: 'Hello123',
   })
   @IsString()
   @Length(4, 50, {

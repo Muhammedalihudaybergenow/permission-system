@@ -18,4 +18,6 @@ const dataSourceOptions: DataSourceOptions & SeederOptions = {
     process.env.TYPEORM_DATABASE_SYNCHRONIZE == 'true' ? true : false,
 };
 
-export default new DataSource(dataSourceOptions);
+export const dataSource = new DataSource(dataSourceOptions);
+
+dataSource.initialize();

@@ -36,6 +36,9 @@ $ npm install
 
 $ docker compose up
 
+##Swagger Documentation
+http://localhost:${SERVER_HOST}
+
 ## Test
 
 ```bash

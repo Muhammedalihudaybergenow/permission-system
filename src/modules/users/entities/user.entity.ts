@@ -47,7 +47,7 @@ export class UserEntity extends DateEntity {
     type: 'integer',
     nullable: false,
   })
-  status: UserStatusEnum.ACTIVE;
+  status: UserStatusEnum;
 
   @ManyToMany(() => RoleEntity, (roles) => roles.users, { cascade: true })
   roles: RoleEntity[];

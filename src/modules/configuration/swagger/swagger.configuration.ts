@@ -8,6 +8,11 @@ export class SwaggerConfiguration {
       .setTitle(process.env.SWAGGER_TITLE)
       .setDescription(process.env.SWAGGER_DESCRIPTION)
       .setVersion(process.env.SWAGGER_VERSION)
+      .addBearerAuth({
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'bearer',
+      })
       .build();
   }
 }

@@ -4,6 +4,7 @@ import { LoginDto, TokenDto } from 'src/modules/authentications/dto';
 import { ApiTags } from '@nestjs/swagger';
 @Controller({
   path: 'authentications',
+  version: '1',
 })
 @ApiTags('Authentication Controller')
 export class AuthenticationsController {

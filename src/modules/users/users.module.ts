@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './services/users.service';
-import { UsersController } from './controllers/users.controller';
+import { ManagerUsersService } from './services/manager-users.service';
+import { ManagerUsersController } from 'src/modules/users/controllers';
 import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,8 +10,8 @@ import {
   UserRepository,
 } from 'src/modules/users/repositories';
 @Module({
-  controllers: [UsersController],
-  providers: [UsersService, UserRepository, ManagerUserRepository],
+  controllers: [ManagerUsersController],
+  providers: [ManagerUsersService, UserRepository, ManagerUserRepository],
   imports: [
     RolesModule,
     PermissionsModule,
