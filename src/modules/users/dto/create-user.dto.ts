@@ -4,6 +4,7 @@ import {
   IsInt,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Length,
   Max,
@@ -62,12 +63,12 @@ export class CreateUserDto {
 
   @ApiProperty({
     type: [Number],
-    required: true,
+    required: false,
     nullable: false,
   })
   @IsInt({
     each: true,
   })
-  @IsNotEmpty()
+  @IsOptional()
   permissionIds: number[];
 }

@@ -1,1 +1,1 @@
-export { PermissionsController } from './permissions.controller';
+export { ManagerPermissionsController } from './manager-permissions.controller';

@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsEnum,
   IsNotEmpty,
-  IsNumberString,
+  IsInt,
   IsOptional,
   IsString,
 } from 'class-validator';
 import { LanguageEnum } from 'src/helpers/enums';
+import { QueryNumberString } from 'src/helpers/decorators';
 export class PaginationDto {
   @ApiProperty({
     type: Number,
@@ -17,27 +19,15 @@ export class PaginationDto {
   @IsEnum(LanguageEnum)
   lang: LanguageEnum;
 
-  @ApiProperty({
-    type: Number,
-    required: true,
-    nullable: false,
-  })
-  @IsNotEmpty()
-  @IsNumberString()
+  @QueryNumberString(20)
   limit: number;
 
-  @ApiProperty({
-    type: Number,
-    required: true,
-    nullable: false,
-  })
-  @IsNotEmpty()
-  @IsNumberString()
+  @QueryNumberString(1)
   skip: number;
 
   @ApiProperty({
     type: String,
-    required: true,
+    required: false,
     nullable: false,
   })
   @IsOptional()

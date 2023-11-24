@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UserRepository } from 'src/modules/users/repositories';
-import { LoginDto, UserResponseDto } from 'src/modules/authentications/dto';
+import { LoginDto, UserAuthResponseDto } from 'src/modules/authentications/dto';
 import { HashHelper } from 'src/helpers/hash';
 import { UserStatusEnum } from 'src/helpers/enums';
 import { TokenService } from './token.service';
@@ -35,7 +35,7 @@ export class AuthenticationsService {
     const tokens = await this.tokenService.generateTokens({
       id: user.id,
     });
-    return new UserResponseDto(user, tokens);
+    return new UserAuthResponseDto(user, tokens);
   }
 
   async validateToken(token: string) {

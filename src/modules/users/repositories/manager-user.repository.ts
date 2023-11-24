@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { UserEntity } from 'src/modules/users/entities';
-import { UpdateUserDto } from 'src/modules/users/dto';
+import { QueryUserPaginationDto, UpdateUserDto } from 'src/modules/users/dto';
 import { HashHelper } from 'src/helpers/hash';
 import { RoleEntity } from 'src/modules/users/roles/entities';
 import { PermissionEntity } from 'src/modules/users/permissions/entities';
@@ -44,6 +44,69 @@ export class ManagerUserRepository extends Repository<UserEntity> {
       .leftJoinAndSelect('user.roles', 'roles')
       .leftJoinAndSelect('roles.permissions', 'rolePermissions')
       .where('user.id =:id', { id })
+      .getOne();
+  }
+
+  findAll(dto: QueryUserPaginationDto) {
+    const { lang, limit, permissionIds, roleIds, search, skip, status } = dto;
+    const query = this.createQueryBuilder('users');
+    if (roleIds) {
+      query.innerJoin('users.roles', 'roles', 'roles.id IN (:...roleIds)', {
+        roleIds,
+      });
+    }
+    if (permissionIds) {
+      query.innerJoin(
+        'users.permissions',
+        'permissions',
+        'permissions.id IN (:...permissionIds)',
+        {
+          permissionIds,
+        },
+      );
+    }
+    if (lang) {
+      query.andWhere('users.lang =:lang', { lang });
+    }
+    if (status) {
+      query.andWhere('users.status =:status', { status });
+    }
+    if (search) {
+      query.andWhere('users.phonenumber ILIKE', { search: `%${search}%` });
+    }
+    return query
+      .select('users.id')
+      .addSelect([
+        'users.phonenumber',
+        'users.lang',
+        'users.isSuperUser',
+        'users.status',
+      ])
+      .limit(limit)
+      .skip((skip - 1) * limit)
+      .getManyAndCount();
+  }
+
+  findRelationsById(id: number) {
+    return this.createQueryBuilder('user')
+      .leftJoin('user.roles', 'roles')
+      .leftJoin('user.permissions', 'permissions')
+      .where('user.id =:id', { id })
+      .select('user.id')
+      .addSelect([
+        'user,phonenumber',
+        'user.lang',
+        'user.status',
+        'user.createdAt',
+        'user.updatedAt',
+        'user.isSuperUser',
+        'roles.id',
+        'roles.name',
+        'roles.slug',
+        'permissions.id',
+        'permissions.name',
+        'permissions.slug',
+      ])
       .getOne();
   }
 }

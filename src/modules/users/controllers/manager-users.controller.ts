@@ -6,9 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ManagerUsersService } from 'src/modules/users/services';
-import { CreateUserDto, UpdateUserDto } from 'src/modules/users/dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  QueryUserPaginationDto,
+} from 'src/modules/users/dto';
 import { Permissions } from 'src/helpers/decorators';
 import { ApiTags } from '@nestjs/swagger';
 @Controller({
@@ -27,8 +32,8 @@ export class ManagerUsersController {
 
   @Get()
   @Permissions('manager.users.users.readAll')
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query() query: QueryUserPaginationDto) {
+    return this.usersService.findAll(query);
   }
 
   @Get(':id')

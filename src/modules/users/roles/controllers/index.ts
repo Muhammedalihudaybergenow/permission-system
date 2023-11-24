@@ -1,1 +1,1 @@
-export { RolesController } from './roles.controller';
+export { ManagerRolesController } from './manager-roles.controller';

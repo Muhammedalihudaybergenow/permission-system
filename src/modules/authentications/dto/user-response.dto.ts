@@ -3,7 +3,7 @@ import { PermissionEntity } from 'src/modules/users/permissions/entities';
 import { RoleEntity } from 'src/modules/users/roles/entities';
 import { TokenInterface } from 'src/modules/authentications/interfaces';
 import { UserEntity } from 'src/modules/users/entities';
-export class UserResponseDto {
+export class UserAuthResponseDto {
   id: number;
   phonenumber: number;
   lang: LanguageEnum;
