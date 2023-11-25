@@ -1,9 +1,22 @@
 import { Module } from '@nestjs/common';
-import { FilesService } from './services/files.service';
-import { FilesController } from './controllers/files.controller';
-
+import { ManagerFilesService } from './services/manager-files.service';
+import { ManagerFilesController } from './controllers/manager-files.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { FileEntity } from 'src/modules/files/entities';
+import { MulterModule } from '@nestjs/platform-express';
+import { ManagerFileRepository } from 'src/modules/files/repositories';
 @Module({
-  controllers: [FilesController],
-  providers: [FilesService],
+  imports: [
+    TypeOrmModule.forFeature([FileEntity]),
+    MulterModule.registerAsync({
+      useFactory: () => {
+        return {
+          storage: './uploads',
+        };
+      },
+    }),
+  ],
+  controllers: [ManagerFilesController],
+  providers: [ManagerFilesService, ManagerFileRepository],
 })
 export class FilesModule {}

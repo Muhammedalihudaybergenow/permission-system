@@ -3,6 +3,7 @@ import { idIndex } from 'src/orm/constants/indexes';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 const tableName = 'files';
+const usersTableName = 'users';
 export class CreateFilesTable1700882932049 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -33,11 +34,26 @@ export class CreateFilesTable1700882932049 implements MigrationInterface {
             length: '20',
             isNullable: false,
           },
+          {
+            name: 'created_by_id',
+            type: 'integer',
+            isNullable: false,
+          },
         ],
         indices: [
           idIndex,
           {
             columnNames: ['path'],
+          },
+          {
+            columnNames: ['created_by_id'],
+          },
+        ],
+        foreignKeys: [
+          {
+            columnNames: ['created_by_id'],
+            referencedColumnNames: ['id'],
+            referencedTableName: usersTableName,
           },
         ],
       }),

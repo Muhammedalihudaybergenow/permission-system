@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsInt, IsOptional } from 'class-validator';
+import { IsIn, IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 import { IsQueryIntArray, QueryNumberString } from 'src/helpers/decorators';
 import { PaginationDto } from 'src/helpers/dtos';
 import { UserStatusEnum } from 'src/helpers/enums';
@@ -21,4 +21,14 @@ export class QueryUserPaginationDto extends PaginationDto {
   @IsOptional()
   @Transform(({ value }) => parseInt(value))
   status: UserStatusEnum;
+
+  @ApiProperty({
+    type: 'enum',
+    enum: ['id', 'phonenumber', 'createdBy'],
+    required: true,
+    nullable: false,
+  })
+  @IsIn(['id', 'phonenumber', 'createdBy'])
+  @IsNotEmpty()
+  orderBy: string;
 }

@@ -48,7 +48,17 @@ export class ManagerUserRepository extends Repository<UserEntity> {
   }
 
   findAll(dto: QueryUserPaginationDto) {
-    const { lang, limit, permissionIds, roleIds, search, skip, status } = dto;
+    const {
+      lang,
+      limit,
+      permissionIds,
+      roleIds,
+      search,
+      skip,
+      status,
+      orderBy,
+      orderDirection,
+    } = dto;
     const query = this.createQueryBuilder('users');
     if (roleIds) {
       query.innerJoin('users.roles', 'roles', 'roles.id IN (:...roleIds)', {
@@ -84,6 +94,7 @@ export class ManagerUserRepository extends Repository<UserEntity> {
       ])
       .limit(limit)
       .skip((skip - 1) * limit)
+      .orderBy(orderBy, orderDirection)
       .getManyAndCount();
   }
 

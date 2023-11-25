@@ -59,6 +59,22 @@ const permissionSeeds: Partial<PermissionEntity>[] = [
     name: 'Manager Permissions Finding One',
     slug: 'manager.users.permissions.readone',
   },
+  {
+    name: 'Manager Files Creation',
+    slug: 'manager.users.files.create',
+  },
+  {
+    name: 'Manager Files Finding All',
+    slug: 'manager.users.files.readall',
+  },
+  {
+    name: 'Manager Files Finding One',
+    slug: 'manager.users.files.readone',
+  },
+  {
+    name: 'Manager Files Removing',
+    slug: 'manager.users.files.remove',
+  },
 ];
 export class PermissionSeed implements Seeder {
   async run(dataSource: DataSource): Promise<any> {

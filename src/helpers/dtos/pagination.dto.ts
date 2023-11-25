@@ -6,6 +6,7 @@ import {
   IsInt,
   IsOptional,
   IsString,
+  IsIn,
 } from 'class-validator';
 import { LanguageEnum } from 'src/helpers/enums';
 import { QueryNumberString } from 'src/helpers/decorators';
@@ -33,4 +34,14 @@ export class PaginationDto {
   @IsOptional()
   @IsString()
   search: string;
+
+  @ApiProperty({
+    type: 'enum',
+    enum: ['ASC', 'DESC'],
+    required: true,
+    nullable: false,
+  })
+  @IsIn(['ASC', 'DESC'])
+  @IsNotEmpty()
+  orderDirection: 'ASC' | 'DESC';
 }

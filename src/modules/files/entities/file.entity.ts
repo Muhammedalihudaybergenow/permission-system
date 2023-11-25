@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from 'src/modules/users/entities';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({
   name: 'files',
@@ -37,6 +44,13 @@ export class FileEntity {
     nullable: false,
   })
   mimetype: string;
+
+  @ManyToOne(() => UserEntity, (createdBy) => createdBy.id)
+  @JoinColumn({
+    name: 'created_by_id',
+    referencedColumnName: 'id',
+  })
+  createdBy: UserEntity;
 
   constructor(file?: Partial<FileEntity>) {
     Object.assign(this, file);
